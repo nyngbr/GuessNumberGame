@@ -14,8 +14,12 @@ document.querySelector('.check').addEventListener('click', function() {
     if (!guess) { //first scenario : no input
         document.querySelector('.message').textContent = '⛔No number';
     }
-    else if (guess === secretNumber) { //second scenario
+    else if (guess === secretNumber) { //second scenario : win
         document.querySelector('.message').textContent = '🎉 Well done mate 🎉';
+        
+        //css styling when player wins
+        document.querySelector('body').style.backgroundColor = '#60b347';
+        document.querySelector('.number').style.width = '30rem';
     }
     else if (guess > secretNumber) { //third scenario 
         if (score > 1) {
