@@ -5,19 +5,27 @@ let secretNumber = Math.trunc(Math.random() * 20) + 1; //trunc function to remov
 let score = 20;
 let highscore = 0;
 
+//display function
+const displayMessage = function (message) {
+    document.querySelector('.message').textContent = message;
+}
 
-
+//game logic
 document.querySelector('.check').addEventListener('click', function() {
-    const guess = Number (document.querySelector('.guess').value); //storing the entered value in a variable
+    const guess = Number (document.querySelector('.guess').value); //input storage in variable
     console.log(guess, typeof guess);
 
-    if (!guess) { //first scenario : no input
-        document.querySelector('.message').textContent = '⛔No number';
+    //no input scenario
+    if (!guess) {
+        displayMessage('⛔No number');
     }
-    else if (guess === secretNumber) { //second scenario : win
-        document.querySelector('.message').textContent = '🎉 Well done mate 🎉';
+
+    //win scenario
+    else if (guess === secretNumber) {
+        displayMessage('🎉 Well done mate 🎉');
         document.querySelector('.number').textContent = secretNumber;
-        //css styling when player wins
+        
+        //css effects for win
         document.querySelector('body').style.backgroundColor = '#60b347';
         document.querySelector('.number').style.width = '30rem';
 
@@ -27,36 +35,30 @@ document.querySelector('.check').addEventListener('click', function() {
             document.querySelector('.highscore').textContent = highscore;
         }
     }
-    else if (guess > secretNumber) { //third scenario 
+    //guess is different to secretNumber
+    else if (guess !== secretNumber) {
         if (score > 1) {
-            document.querySelector('.message').textContent = 'Too high📈 mate';
+            displayMessage(guess > secretNumber ? 'Too high📈 mate': 'Too low📉 mate');
             score--;
-            document.querySelector('.score').textContent = score;
+            document.querySelector('.score').textContent = score;  
+            
         }
+        //loss scenario
         else {
-            document.querySelector('.message').textContent = '🗿 you lost';
-            document.querySelector('.score').textContent = 0;
-        }
-    }
-    else if (guess < secretNumber) { //fourth scenario
-        if (score > 1) {
-            document.querySelector('.message').textContent = 'Too low📉 mate';
-            score--;
-            document.querySelector('.score').textContent = score;
-        }
-        else {
-            document.querySelector('.message').textContent = '🗿 you lost';
+            displayMessage('🗿 you lost');
             document.querySelector('.score').textContent = 0;
         }
     }
 });
 
+//starting a new game 
 document.querySelector('.again').addEventListener('click', function () {
-    //restoring initial values for a new game
+    //restoring values for a new game
+    
     score = 20;
     secretNumber = Math.trunc(Math.random() * 20) + 1;
 
-    document.querySelector('.message').textContent = 'Start guessing...';
+    displayMessage('Start guessing...');
     document.querySelector('.score').textContent = score;
     document.querySelector('.number').textContent = '?';
     document.querySelector('.guess').value = '';
